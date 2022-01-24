@@ -1,7 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"log"
+	"os"
+)
 
 func main() {
-	fmt.Println("sql to struct")
+	bData, err := os.ReadFile("./gargantua.sql")
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	tableParser := newTableParser()
+	tables := tableParser.ParseString(string(bData))
+	_ = tables
+
+	print(genStruct(tables[0]))
 }
